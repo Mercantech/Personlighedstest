@@ -1,0 +1,16 @@
+{
+  "name": "samspil-personlighedstest",
+  "private": true,
+  "scripts": {
+    "setup": "npm --prefix web ci && npm --prefix api install",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "docker:up": "docker compose up -d --build",
+    "docker:local": "docker compose -f docker-compose.yml -f docker-compose.local.yml up --build",
+    "dev": "npm --prefix web run dev -- --host localhost --port 5173 --strictPort",
+    "dev:api": "npm --prefix api run dev",
+    "dev:all": "npm run db:up && npm run dev:api",
+    "build": "npm --prefix web run build",
+    "test": "npm --prefix web test && npm --prefix api test"
+  }
+}

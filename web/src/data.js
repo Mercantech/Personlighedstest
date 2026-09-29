@@ -1,0 +1,680 @@
+export const dimensions = [
+  {
+    id: "EI",
+    title: "Energi",
+    left: "Ekstrovert",
+    right: "Introvert",
+    color: "#4298ad",
+    description: "Hvordan du foretrækker at tænke og få energi i samarbejdet.",
+  },
+  {
+    id: "NS",
+    title: "Information",
+    left: "Intuitiv",
+    right: "Observerende",
+    color: "#c69d35",
+    description:
+      "Om du først søger muligheder og sammenhænge eller konkrete erfaringer.",
+  },
+  {
+    id: "TF",
+    title: "Beslutninger",
+    left: "Analytisk",
+    right: "Værdiorienteret",
+    color: "#429b7c",
+    description:
+      "Hvad du typisk lægger vægt på, når der er flere mulige løsninger.",
+  },
+  {
+    id: "JP",
+    title: "Arbejdsform",
+    left: "Struktureret",
+    right: "Udforskende",
+    color: "#88659a",
+    description:
+      "Hvor meget planlægning og åbenhed du foretrækker i dit arbejde.",
+  },
+  {
+    id: "AT",
+    title: "Reaktion på pres",
+    left: "Rolig",
+    right: "Selvgranskende",
+    color: "#b56870",
+    description:
+      "Hvordan du oplever usikkerhed og feedback. Denne dimension ændrer ikke din firebogstavsprofil.",
+  },
+];
+
+// Originale spørgsmål. Fortegn +1 peger mod dimensionens venstre pol.
+const bank = {
+  EI: [
+    [1, "Jeg får energi af at løse en opgave sammen med andre."],
+    [-1, "Jeg tænker bedst, når jeg først får lidt tid alene."],
+    [1, "Jeg tager gerne ordet, når gruppen skal i gang."],
+    [-1, "Efter en dag med mange samtaler har jeg brug for ro."],
+    [1, "Jeg finder ofte mine idéer ved at tale dem igennem."],
+    [-1, "Jeg foretrækker at skrive mine tanker ned før et møde."],
+    [1, "Jeg opsøger gerne nye samarbejdspartnere på holdet."],
+    [-1, "Jeg foretrækker længere perioder med selvstændig fordybelse."],
+    [1, "En livlig diskussion hjælper mig med at forstå et problem."],
+    [-1, "Jeg vil helst forberede mit bidrag, før jeg deler det."],
+    [1, "Jeg synes, det er naturligt at præsentere gruppens arbejde."],
+    [-1, "Jeg trives bedst med få samtaler i løbet af en arbejdsdag."],
+    [1, "Jeg synes, det er nemmere at tænke, når der er andre at sparre med."],
+    [-1, "Jeg vælger gerne at arbejde et sted, hvor jeg ikke bliver afbrudt."],
+    [1, "Jeg synes, en hurtig snak kan løse mere end en lang skriftlig tråd."],
+    [-1, "Jeg bliver hurtigt træt, når der er mange møder efter hinanden."],
+    [1, "Jeg synes, det er naturligt at invitere flere ind i en opgave."],
+    [-1, "Jeg foretrækker at sende en færdig tanke frem for at tænke højt."],
+    [1, "Jeg synes, fælles brainstorm giver mig mere energi end alene-arbejde."],
+    [-1, "Jeg synes, det er lettere at koncentrere mig, når jeg ikke skal forklare undervejs."],
+    [1, "Jeg synes, en åben dør og løbende snak passer godt til min arbejdsrytme."],
+    [-1, "Jeg synes, det er rart at have et klart skift mellem fælles tid og egen tid."],
+    [1, "Jeg synes, jeg husker bedre, når jeg har talt en idé igennem med andre."],
+    [-1, "Jeg synes, jeg bliver mere skarp, når jeg først har tænkt færdigt for mig selv."],
+    [1, "Jeg synes, det er naturligt at spørge kolleger, så snart jeg står fast."],
+    [-1, "Jeg synes, jeg hellere vil løse det meste selv, før jeg beder om hjælp."],
+    [1, "Jeg synes, et travlt fællesrum kan være motiverende, når vi bygger noget sammen."],
+    [-1, "Jeg synes, for meget larm og afbrydelser gør det svært at levere godt arbejde."],
+    [1, "Jeg synes, jeg får hurtigere klarhed, når flere stemmer er med i starten."],
+    [-1, "Jeg synes, jeg får hurtigere klarhed, når jeg først får ro til at sortere tanker."],
+  ],
+  NS: [
+    [1, "Jeg bliver optaget af de muligheder, en ny idé kan åbne."],
+    [-1, "Konkrete eksempler hjælper mig mere end abstrakte forklaringer."],
+    [1, "Jeg leder efter mønstre på tværs af forskellige problemer."],
+    [-1, "Jeg starter helst med det, vi allerede ved virker."],
+    [1, "Jeg kan lide at forestille mig, hvordan et produkt kan udvikle sig."],
+    [-1, "Jeg lægger hurtigt mærke til detaljer, der ikke stemmer."],
+    [1, "Jeg vil gerne forstå de overordnede principper før detaljerne."],
+    [-1, "Jeg lærer bedst ved at følge et praktisk eksempel."],
+    [1, "Jeg udforsker gerne en uprøvet tilgang, selv om den er usikker."],
+    [
+      -1,
+      "Jeg foretrækker krav, der beskriver helt konkret, hvad der skal ske.",
+    ],
+    [1, "Jeg tænker ofte over alternative måder at løse samme opgave på."],
+    [-1, "Jeg stoler mest på erfaringer, jeg selv kan efterprøve."],
+    [1, "Jeg synes, det er spændende, når en opgave kan tolkes på flere måder."],
+    [-1, "Jeg vil gerne have klare eksempler, før jeg begynder at bygge."],
+    [1, "Jeg ser ofte sammenhænge, andre først opdager senere."],
+    [-1, "Jeg holder mig tæt på det, der allerede er afprøvet i praksis."],
+    [1, "Jeg kan lide at skitsere en fremtidig version, før vi vælger den første."],
+    [-1, "Jeg mister overblikket, hvis kravene er for abstrakte."],
+    [1, "Jeg synes, det er spændende at gætte, hvordan brugernes behov kan ændre sig."],
+    [-1, "Jeg synes, det er vigtigere at få det nuværende behov helt på plads først."],
+    [1, "Jeg synes, metaforer og modeller hjælper mig med at forstå et system."],
+    [-1, "Jeg synes, trin-for-trin-vejledninger hjælper mig mere end store modeller."],
+    [1, "Jeg synes, det er naturligt at spørge ‘hvad nu hvis’, midt i en opgave."],
+    [-1, "Jeg synes, det er bedst at holde sig til den aftalte løsning, til den er færdig."],
+    [1, "Jeg synes, nye vinkler på et gammelt problem er det, der driver mig."],
+    [-1, "Jeg synes, pålidelig teknik og kendte mønstre giver det bedste resultat."],
+    [1, "Jeg synes, det er okay at starte med en vision, også når detaljerne mangler."],
+    [-1, "Jeg synes, jeg bliver utryg, hvis vi ikke har konkrete trin at følge."],
+    [1, "Jeg synes, det er spændende, når en løsning kan vokse i flere retninger."],
+    [-1, "Jeg synes, det er spændende, når en løsning er skarp og afgrænset fra start."],
+  ],
+  TF: [
+    [1, "Når vi vælger en løsning, vægter jeg logiske argumenter højest."],
+    [-1, "Jeg tænker først på, hvordan en beslutning påvirker de andre."],
+    [1, "Jeg siger gerne imod en idé, hvis argumenterne ikke holder."],
+    [-1, "Jeg gør meget ud af, at kritik bliver oplevet som hjælpsom."],
+    [
+      1,
+      "Jeg foretrækker tydelige kriterier frem for en fælles mavefornemmelse.",
+    ],
+    [
+      -1,
+      "Jeg forsøger at forstå personens perspektiv, før jeg vurderer en konflikt.",
+    ],
+    [
+      1,
+      "En ubehagelig konklusion kan være nødvendig, hvis fakta peger på den.",
+    ],
+    [-1, "Det betyder meget for mig, at alle føler sig hørt i en beslutning."],
+    [
+      1,
+      "Jeg kan godt adskille en faglig uenighed fra mit forhold til personen.",
+    ],
+    [-1, "Jeg vurderer en løsning ud fra de værdier, den understøtter."],
+    [1, "Jeg efterspørger dokumentation, når vi er uenige om en løsning."],
+    [
+      -1,
+      "Jeg prioriterer ofte gruppens relationer, når to løsninger er lige gode.",
+    ],
+    [1, "Jeg synes, den bedste beslutning er den, der kan begrundes trin for trin."],
+    [-1, "Jeg synes, det er vigtigt, at beslutningen føles fair for dem, den rammer."],
+    [1, "Jeg kan godt skære ind til sagen, når diskussionen bliver personlig."],
+    [-1, "Jeg holder igen med kritik, hvis jeg kan mærke, at stemningen er skrøbelig."],
+    [1, "Jeg vil gerne måle en løsning på, hvad den faktisk opnår."],
+    [-1, "Jeg spørger ofte, hvem der bliver hjulpet eller glemt i en beslutning."],
+    [1, "Jeg synes, en god beslutning skal kunne forklares uden at blande følelser ind."],
+    [-1, "Jeg synes, en god beslutning også skal tage hensyn til, hvordan folk har det."],
+    [1, "Jeg synes, det er fair at pege på svagheder, også når det skaber uro."],
+    [-1, "Jeg synes, det er fair at vente med skarp kritik, til personen er klar."],
+    [1, "Jeg synes, objektive mål er det bedste kompas, når vi er uenige."],
+    [-1, "Jeg synes, fælles værdier er det bedste kompas, når vi er uenige."],
+    [1, "Jeg synes, jeg kan støtte en løsning, jeg ikke personligt synes om, hvis data taler for den."],
+    [-1, "Jeg synes, jeg har svært ved at støtte en løsning, der føles forkert for gruppen."],
+    [1, "Jeg synes, det er vigtigt at skille problemet fra personerne i rummet."],
+    [-1, "Jeg synes, det er vigtigt at passe på relationerne, mens vi løser problemet."],
+    [1, "Jeg synes, den stærkeste argumentation er den, der holder uanset hvem der siger den."],
+    [-1, "Jeg synes, den stærkeste argumentation også tager højde for, hvem der bliver ramt."],
+  ],
+  JP: [
+    [1, "Jeg har det bedst, når vi aftaler en plan, før vi begynder."],
+    [-1, "Jeg vil helst holde flere muligheder åbne så længe som muligt."],
+    [1, "Jeg deler gerne store opgaver op i tydelige delopgaver."],
+    [-1, "Jeg trives med at tilpasse dagens arbejde undervejs."],
+    [1, "Jeg kan lide at afslutte én opgave, før jeg starter på en ny."],
+    [-1, "En uventet ændring kan give mig ny motivation."],
+    [1, "Jeg vil gerne have aftalt ansvar og deadlines tidligt."],
+    [-1, "Jeg får ofte mine bedste idéer, mens jeg prøver mig frem."],
+    [1, "En overskuelig opgaveliste giver mig ro."],
+    [-1, "Jeg foretrækker fleksible rammer frem for en detaljeret tidsplan."],
+    [1, "Jeg gør en indsats for at få ting færdige i god tid."],
+    [
+      -1,
+      "Jeg ændrer gerne retning, når jeg opdager en mere interessant mulighed.",
+    ],
+    [1, "Jeg synes, det er rart at vide, hvad der sker i næste uge."],
+    [-1, "Jeg arbejder bedst, når jeg kan skifte spor uden for meget planlægning."],
+    [1, "Jeg bliver mere tryg, når milepæle er skrevet ned."],
+    [-1, "Jeg synes, for meget struktur kan gøre arbejdet tungt."],
+    [1, "Jeg vil gerne lukke beslutninger, så vi kan komme videre."],
+    [-1, "Jeg synes, det er fint at vente med at beslutte, til vi har prøvet mere."],
+    [1, "Jeg synes, en fast arbejdsrytme gør det lettere at levere stabilt."],
+    [-1, "Jeg synes, en fri arbejdsrytme gør det lettere at levere kreativt."],
+    [1, "Jeg synes, det er rart at krydse ting af, så snart de er færdige."],
+    [-1, "Jeg synes, det er okay at lade flere tråde stå åbne, mens jeg finder den bedste vej."],
+    [1, "Jeg synes, klare aftaler om ‘færdig’ sparer os for forvirring senere."],
+    [-1, "Jeg synes, ‘færdig’ gerne må være fleksibelt, til vi har lært mere."],
+    [1, "Jeg synes, jeg arbejder bedst, når ugen er planlagt i forvejen."],
+    [-1, "Jeg synes, jeg arbejder bedst, når jeg kan vælge dagens fokus efter energi."],
+    [1, "Jeg synes, det er vigtigt at lukke en fase, før vi åbner den næste."],
+    [-1, "Jeg synes, det er vigtigt at kunne vende tilbage og ændre en fase, hvis noget nyt dukker op."],
+    [1, "Jeg synes, det er rart at vide præcis, hvad der skal være færdigt i dag."],
+    [-1, "Jeg synes, det er rart at kunne skifte fokus, hvis noget mere vigtigt dukker op."],
+  ],
+  AT: [
+    [1, "Jeg bevarer som regel roen, når noget uventet går galt."],
+    [
+      -1,
+      "Jeg bruger ofte tid på at spekulere over, om mit arbejde er godt nok.",
+    ],
+    [1, "Jeg kan slippe en fejl, når jeg har lært af den."],
+    [-1, "Kritik bliver ofte ved med at fylde i mine tanker."],
+    [1, "Jeg stoler som regel på min vurdering i en usikker situation."],
+    [-1, "Jeg sammenligner ofte min indsats med de andres."],
+    [1, "Jeg kan tage imod feedback uden at miste modet."],
+    [-1, "En uklar opgave kan gøre mig urolig."],
+    [1, "Jeg er normalt tryg ved at vise arbejde, der ikke er perfekt endnu."],
+    [-1, "Jeg genovervejer ofte en beslutning, efter den er truffet."],
+    [1, "Jeg kan acceptere, at ikke alle løsninger bliver lige gode."],
+    [-1, "Jeg har svært ved at lægge projektet fra mig, når der er problemer."],
+    [1, "Jeg synes, de fleste fejl er noget, man kan rette uden drama."],
+    [-1, "Jeg bliver hurtigt usikker, hvis andre virker mere sikre end mig."],
+    [1, "Jeg kan holde fokuset, selv når tidsplanen skrider."],
+    [-1, "Jeg tænker ofte på, hvad der kan gå galt, før jeg går i gang."],
+    [1, "Jeg synes, feedback er nyttig, også når den er direkte."],
+    [-1, "Jeg har brug for ekstra tid til at lande efter en skarp kommentar."],
+    [1, "Jeg synes, jeg kan komme videre efter et nederlag uden at hænge fast i det."],
+    [-1, "Jeg synes, et nederlag kan fylde længe, også når jeg prøver at slippe det."],
+    [1, "Jeg synes, jeg tør vise usikkerhed uden at miste autoritet."],
+    [-1, "Jeg synes, jeg holder usikkerhed for mig selv, så andre ikke mister tillid."],
+    [1, "Jeg synes, de fleste udfordringer er midlertidige, hvis vi handler."],
+    [-1, "Jeg synes, udfordringer kan føles større, end de egentlig er."],
+    [1, "Jeg synes, jeg kan sove godt, også når en opgave ikke er helt færdig."],
+    [-1, "Jeg synes, uafsluttede opgaver ofte følger med mig hjem i tankerne."],
+    [1, "Jeg synes, jeg genfinder roen hurtigt efter en hektisk periode."],
+    [-1, "Jeg synes, det tager tid for mig at lande, når presset har været højt."],
+    [1, "Jeg synes, jeg kan stole på, at tingene nok skal gå, også midt i kaos."],
+    [-1, "Jeg synes, kaos hurtigt får mig til at tvivle på, om jeg kan nå det."],
+  ],
+};
+
+export const QUESTIONS_PER_DIMENSION = 30;
+export const MIN_TEST_LENGTH = 30;
+/** Antal udsagn i hele banken (runde-robin). */
+export const MAX_TEST_LENGTH = QUESTIONS_PER_DIMENSION * 5;
+
+export const questions = Array.from(
+  { length: QUESTIONS_PER_DIMENSION },
+  (_, i) =>
+    dimensions.map((d) => ({
+      id: `${d.id}-${i + 1}`,
+      dimension: d.id,
+      direction: bank[d.id][i][0],
+      text: bank[d.id][i][1],
+    })),
+).flat();
+
+/** Første `count` udsagn i runde-robin-rækkefølge (1…150). */
+export function selectQuestions(count = questions.length) {
+  const n = Math.floor(Number(count));
+  if (!Number.isFinite(n) || n < 1 || n > questions.length) {
+    throw new Error(`Vælg mellem 1 og ${questions.length} udsagn.`);
+  }
+  return questions.slice(0, n);
+}
+
+/** Gyldigt antal besvarede udsagn til scoring (min. 30, max. banken). */
+export function normalizeTestLength(length) {
+  const n = Math.floor(Number(length));
+  if (!Number.isFinite(n)) return MIN_TEST_LENGTH;
+  return Math.min(questions.length, Math.max(MIN_TEST_LENGTH, n));
+}
+
+/** Antal besvarede udsagn i starten af banken (sammenhængende prefix). */
+export function answeredPrefixCount(answers) {
+  if (!Array.isArray(answers)) return 0;
+  let n = 0;
+  const limit = Math.min(answers.length, questions.length);
+  for (let i = 0; i < limit; i++) {
+    const a = answers[i];
+    if (!(Number.isInteger(a) && a >= -3 && a <= 3)) break;
+    n++;
+  }
+  return n;
+}
+
+export const families = {
+  analysts: {
+    name: "Analytikere",
+    color: "#826296",
+    pale: "#f1eaf5",
+    intro: "Idéer, logik og nye perspektiver.",
+    icon: "Brain",
+  },
+  diplomats: {
+    name: "Diplomater",
+    color: "#398f71",
+    pale: "#e9f4ed",
+    intro: "Mennesker, mening og fælles retning.",
+    icon: "Sprout",
+  },
+  sentinels: {
+    name: "Vogtere",
+    color: "#3d91a6",
+    pale: "#eaf3f7",
+    intro: "Overblik, grundighed og pålidelighed.",
+    icon: "Layers",
+  },
+  explorers: {
+    name: "Udforskere",
+    color: "#aa811f",
+    pale: "#faf2dd",
+    intro: "Handling, nysgerrighed og praktiske løsninger.",
+    icon: "Compass",
+  },
+};
+
+// Originale undervisningsbeskrivelser med genkendelige typenavne fra referencen.
+const profiles = [
+  [
+    "INTJ",
+    "Arkitekt",
+    "analysts",
+    "Du forbinder detaljer med en større plan og vil gerne forstå, hvorfor et system er bygget, som det er.",
+    "Systemtænkning;Selvstændig fordybelse;Langsigtet overblik",
+    "Du kan komme til at forfine arkitekturen, før gruppen har afprøvet behovet.",
+    "Tegn to mulige arkitekturer, og lav et lille eksperiment, der viser, hvilken der løser problemet bedst.",
+    "Forklar dine antagelser, og bed en makker udfordre dem, før du beslutter retningen.",
+  ],
+  [
+    "INTP",
+    "Logiker",
+    "analysts",
+    "Du undersøger gerne et problem fra flere vinkler og bliver nysgerrig, når en forklaring ikke hænger sammen.",
+    "Dyb analyse;Nysgerrighed;Præcise forklaringer",
+    "Interessante sidespor kan gøre det svært at afslutte en opgave.",
+    "Brug en tidsafgrænset undersøgelse til at afklare en teknisk usikkerhed. Afslut med en konkret anbefaling.",
+    "Del dine mellemregninger, og aftal med gruppen, hvornår løsningen er god nok.",
+  ],
+  [
+    "ENTJ",
+    "Kommandør",
+    "analysts",
+    "Du får lyst til at samle idéer til en tydelig retning og hjælpe gruppen med at komme fremad.",
+    "Prioritering;Beslutningskraft;Koordinering",
+    "Dit tempo kan gøre det svært for andre at nå at bidrage.",
+    "Sæt et konkret sprintmål, og forbind hver opgave med den værdi, den skal skabe.",
+    "Lad alle skrive deres forslag først. Spørg til indvendinger, før du samler beslutningen.",
+  ],
+  [
+    "ENTP",
+    "Debattør",
+    "analysts",
+    "Du ser alternative muligheder og bruger gerne diskussioner til at afprøve nye tanker.",
+    "Idérigdom;Kritiske spørgsmål;Fleksibilitet",
+    "Nye idéer kan fortrænge de opgaver, gruppen allerede har aftalt.",
+    "Byg en lille prototype af den mest usikre idé, og mål, hvad I lærte af den.",
+    "Aftal, hvornår I udforsker, og hvornår I færdiggør. Gem nye idéer i en fælles liste.",
+  ],
+  [
+    "INFJ",
+    "Fortaler",
+    "diplomats",
+    "Du søger sammenhæng mellem det, I bygger, og den betydning det har for mennesker.",
+    "Helhedsblik;Lyttende samarbejde;Formålsbevidsthed",
+    "Du kan vente længe med at dele en bekymring, hvis du vil undgå konflikt.",
+    "Forbind en brugerrejse med konkrete krav, og undersøg, hvem løsningen overser.",
+    "Sig tidligt, hvad du er bekymret for, og gør det til et spørgsmål, gruppen kan undersøge.",
+  ],
+  [
+    "INFP",
+    "Mægler",
+    "diplomats",
+    "Du motiveres af at skabe noget meningsfuldt og giver gerne plads til andre måder at se verden på.",
+    "Indlevelse;Kreativitet;Sans for værdier",
+    "Det kan være svært at prioritere, når flere løsninger føles vigtige.",
+    "Omsæt en vigtig brugerværdi til en lille funktion, som I kan teste med en bruger.",
+    "Forklar den værdi, du vil beskytte, og find sammen et realistisk første skridt.",
+  ],
+  [
+    "ENFJ",
+    "Protagonist",
+    "diplomats",
+    "Du lægger mærke til gruppens dynamik og vil gerne hjælpe andre med at bidrage og udvikle sig.",
+    "Facilitering;Motivation;Opmærksomhed på andre",
+    "Du kan påtage dig for meget ansvar for, at alle har det godt.",
+    "Facilitér en retrospektiv med ét konkret eksperiment, som gruppen afprøver i næste sprint.",
+    "Fordel også ansvaret for samarbejdet. Giv plads til uenighed uden straks at løse den.",
+  ],
+  [
+    "ENFP",
+    "Aktivist",
+    "diplomats",
+    "Du får energi af mennesker og muligheder og kan gøre en ny idé levende for andre.",
+    "Engagement;Nye forbindelser;Åbenhed",
+    "Du kan miste energi, når projektet går fra muligheder til gentagelser.",
+    "Brug en workshop til at finde flere løsninger, og vælg derefter én lille prototype.",
+    "Gør opfølgning synlig, og arbejd sammen med en makker om de sidste detaljer.",
+  ],
+  [
+    "ISTJ",
+    "Logistiker",
+    "sentinels",
+    "Du skaber stabilitet gennem grundighed, konkrete aftaler og opmærksomhed på det, der skal fungere.",
+    "Pålidelighed;Detaljesans;Systematik",
+    "En uprøvet metode kan blive afvist, før den er undersøgt.",
+    "Gør gruppens kvalitetskriterier konkrete med testcases, dokumentation og en fælles definition af færdig.",
+    "Forklar, hvilken risiko du ser, og invitér til et lille forsøg, der kan afklare den.",
+  ],
+  [
+    "ISFJ",
+    "Beskytter",
+    "sentinels",
+    "Du lægger mærke til praktiske behov og bidrager til, at gruppens hverdag fungerer.",
+    "Omsorg;Vedholdenhed;Praktisk opfølgning",
+    "Usynligt støttearbejde kan fylde mere end dine egne læringsmål.",
+    "Undersøg fejlbeskeder og onboarding: Kan en ny bruger eller udvikler komme videre uden hjælp?",
+    "Gør dit arbejde synligt på tavlen, og aftal en opgave, der også udfordrer dig fagligt.",
+  ],
+  [
+    "ESTJ",
+    "Leder",
+    "sentinels",
+    "Du kan lide klare aftaler og omsætter gerne et fælles mål til opgaver, ansvar og fremdrift.",
+    "Planlægning;Tydelighed;Gennemførelse",
+    "En detaljeret plan kan komme til at fylde mere end nye indsigter.",
+    "Skab overblik over afhængigheder og blokeringer, og hold opgavefordelingen opdateret.",
+    "Spørg, hvad gruppen har lært, før du fastholder planen. Gør plads til at ændre den.",
+  ],
+  [
+    "ESFJ",
+    "Konsul",
+    "sentinels",
+    "Du skaber sammenhæng mellem mennesker og aftaler og vil gerne sikre, at alle kan være med.",
+    "Samarbejde;Opfølgning;Tydelig kommunikation",
+    "Et ønske om enighed kan skjule en vigtig faglig uenighed.",
+    "Hold en kort fælles gennemgang af opgaver og forventninger, og saml åbne spørgsmål.",
+    "Bed aktivt om et modargument, og adskil kritik af løsningen fra kritik af personen.",
+  ],
+  [
+    "ISTP",
+    "Virtuos",
+    "explorers",
+    "Du undersøger, hvordan ting virker, og foretrækker ofte at lære ved selv at skille problemet ad.",
+    "Fejlfinding;Praktiske eksperimenter;Ro i handling",
+    "Din løsning kan blive svær for andre at overtage, hvis forklaringen mangler.",
+    "Genskab en fejl i det mindst mulige eksempel, og dokumentér årsag og løsning.",
+    "Tænk højt under parprogrammering, og skriv de vigtigste opdagelser ned.",
+  ],
+  [
+    "ISFP",
+    "Eventyrer",
+    "explorers",
+    "Du lægger mærke til oplevelsen i detaljen og vil gerne gøre noget konkret, som føles rigtigt for brugeren.",
+    "Sans for oplevelse;Tilpasning;Praktisk kreativitet",
+    "En stærk fornemmelse kan være vanskelig at forklare som et fælles kriterium.",
+    "Afprøv en interaktion med rigtige opgaver, og se, hvor brugeren tøver eller misforstår.",
+    "Vis to konkrete varianter, og forklar, hvilket brugerbehov de hver især understøtter.",
+  ],
+  [
+    "ESTP",
+    "Entreprenør",
+    "explorers",
+    "Du lærer af handling og finder ofte en vej frem, mens andre stadig overvejer mulighederne.",
+    "Handlekraft;Tilpasning;Hurtig afprøvning",
+    "Et hurtigt resultat kan skjule teknisk gæld eller oversete tilfælde.",
+    "Byg en fungerende vertikal skive fra brugerflade til data, og få hurtig feedback.",
+    "Aftal et kort kvalitetstjek med en makker, før I kalder opgaven færdig.",
+  ],
+  [
+    "ESFP",
+    "Entertainer",
+    "explorers",
+    "Du bringer energi ind i samarbejdet og får øje på, hvordan andre reagerer på det, I laver.",
+    "Nærvær;Formidling;Praktisk samarbejde",
+    "Opgaver uden umiddelbar feedback kan være svære at fastholde fokus på.",
+    "Demonstrér en funktion tidligt, og brug publikums spørgsmål til at vælge næste forbedring.",
+    "Del store opgaver i små, synlige resultater, og aftal faste tidspunkter til fordybelse.",
+  ],
+];
+export const types = profiles.map(
+  ([
+    code,
+    name,
+    family,
+    description,
+    strengths,
+    blindspot,
+    software,
+    teamwork,
+  ]) => ({
+    code,
+    name,
+    family,
+    description,
+    strengths: strengths.split(";"),
+    blindspot,
+    software,
+    teamwork,
+  }),
+);
+
+export const learningPatterns = [
+  {
+    name: "Parprogrammering",
+    title: "Tænk højt – og giv tænketid",
+    lead: "Når to arbejder på samme skærm, mødes hurtige beslutninger og stille fordybelse. God parprogrammering handler ikke om at være ens – men om at skifte roller bevidst.",
+    points: [
+      "Skift mellem driver og navigator hvert 15.–20. minut, så begge får både tempo og overblik.",
+      "Start med to minutters individuel tænkning, før I taler, så introverte og ekstraverte får lige start.",
+      "Sig højt, hvad I er usikre på. Det gør blinde vinkler til fælles undersøgelser i stedet for skjulte fejl.",
+    ],
+    try: "Vælg én opgave i næste sprint, hvor I parprogrammerer i 45 minutter med tydelig rollebytning.",
+    figure: "ENTP",
+  },
+  {
+    name: "Code review",
+    title: "Vær tydelig om kode og hensigt",
+    lead: "Et review er en samtale om kvalitet – ikke en karakter. Når I skiller fejl, forslag og smag ad, bliver feedback lettere at bruge for alle typer.",
+    points: [
+      "Aftal på forhånd, hvad der er must-fix, forslag og personlig smag, så kommentarerne ikke blandes sammen.",
+      "Forklar konsekvensen af en ændring: hvad den løser, hvad den risikerer, og hvad den gør nemmere næste uge.",
+      "Stil spørgsmål til antagelser, du ikke forstår, i stedet for at rette først. Det åbner for læring på begge sider.",
+    ],
+    try: "Brug tre labels i næste review: fejl, forslag og smag – og bed om ét spørgsmål pr. PR.",
+    figure: "INTJ",
+  },
+  {
+    name: "Sprintplanlægning",
+    title: "Kombinér retning med råderum",
+    lead: "Nogle trives med klare rammer; andre med plads til at eksperimentere. En god plan giver begge dele: fælles mål og frihed til at finde vejen.",
+    points: [
+      "Sæt ét fælles sprintmål og tydelige acceptkriterier, så alle ved, hvornår “færdig” er færdig.",
+      "Lad løsningen være åben i starten, og afsæt tid til korte undersøgelser af det, I endnu ikke ved.",
+      "Fordel opgaver efter både lyst og udvikling – ikke kun efter, hvem der er hurtigst lige nu.",
+    ],
+    try: "Skriv acceptkriterier før estimering, og reserver 10% af sprinten til en fælles ukendt.",
+    figure: "ESTJ",
+  },
+  {
+    name: "Retrospektiv",
+    title: "Gør forskelle til eksperimenter",
+    lead: "En retrospektiv virker bedst, når alle får skrevet først. Så bliver forskelle i tempo, feedback og fokus til konkrete aftaler – ikke til typeetiketter.",
+    points: [
+      "Lad alle skrive i stilhed først, så de stille stemmer ikke forsvinder i den hurtige snak.",
+      "Vælg én ændring i samarbejdet, afprøv den i en uge, og vurder den ud fra erfaringer – ikke bogstaver.",
+      "Spørg: Hvad hjalp hvem? Det gør jeres næste aftale mere præcis end en generel “vi skal kommunikere bedre”.",
+    ],
+    try: "Afslut næste retro med én aftale, én ejer og én dato for, hvornår I tjekker den.",
+    figure: "ENFJ",
+  },
+];
+
+// Undervisningsguide til gruppedannelse – ikke en facitliste.
+export const groupGuide = [
+  {
+    name: "Forskellige profiler",
+    title: "Variation giver flere blinde vinkler væk",
+    lead: "I softwareprojekter hjælper det ofte, at gruppen ikke tænker ens. Når energi, idéer, beslutninger og struktur fordeles, bliver det lettere at opdage huller i løsningen tidligt.",
+    points: [
+      "Bland gerne på de fire typebogstaver: én der tænker højt, én der fordyber sig, én der spørger til mennesker, og én der holder planen.",
+      "Gruppebyggeren her søger netop variation på de første fire dimensioner – som et startforslag, ikke som facit.",
+      "Forskellige profiler kræver aftaler: Hvordan giver I feedback? Hvornår er der plads til stilhed? Hvornår skal I beslutte?",
+    ],
+    try: "Bed hver gruppe sige én styrke og én blød flanke højt, før de går i gang med koden.",
+    figure: "ENTP",
+    band: "band-analysts",
+  },
+  {
+    name: "Ens profiler",
+    title: "Lighed kan give tryghed – og blinde vinkler",
+    lead: "Grupper med mange ens præferencer kan komme hurtigt i gang og føles trygge. Risikoen er, at I springer det over, I alle synes er “ubehageligt” eller “uvigtigt”.",
+    points: [
+      "Brug ens grupper bevidst: fx til en kort idéfase, hvor I vil have højt tempo og samme sprog.",
+      "Pas på, hvis alle er meget planlæggende, meget impulsive eller meget konfliktundgående – så mangler der ofte en modvægt.",
+      "Hvis holdet ligner hinanden, kan I “låne” roller: én aftaler at være devil’s advocate, én holder øje med brugerbehov, én stopper op og spørger hvorfor.",
+    ],
+    try: "Ved ens grupper: vælg bevidst én opgave, hvor I øver den stil, I normalt springer over.",
+    figure: "ISFJ",
+    band: "band-sentinels",
+  },
+  {
+    name: "Familier der løfter hinanden",
+    title: "Fire farver – fire bidrag i et projekt",
+    lead: "De fire familier er et praktisk sprog for bidrag. Ingen familie “ejer” en rolle, men kombinationer gør det lettere at tale om, hvad gruppen har brug for.",
+    points: [
+      "Analytikere + Udforskere: idé og afprøvning. Godt, når I skal udfordre antagelser og bygge noget hurtigt.",
+      "Diplomater + Vogtere: mening og gennemførelse. Godt, når brugerbehov og pålidelig levering skal hænge sammen.",
+      "Bland gerne mindst to familier i samme gruppe, så samtalen ikke kun handler om én type styrke.",
+    ],
+    try: "Kig på jeres forslag: mangler en familie helt? Tal om, hvordan I dækker det med aftaler i stedet for at bytte alle rundt.",
+    figure: "ENFJ",
+    band: "band-diplomats",
+  },
+  {
+    name: "Hvem passer godt sammen?",
+    title: "Komplementære par – som samtale, ikke skæbne",
+    lead: "Nogle præferencer balancerer hinanden godt i et projekt. Brug dem som spørgsmål til holdet – ikke som regler for, hvem der “må” arbejde sammen.",
+    points: [
+      "Ekstrovert + introvert: den ene åbner samtalen, den anden får tid til at tænke – hvis I skifter tempo bevidst.",
+      "Tænkende + følende: den ene skærper logikken, den anden husker mennesker og konsekvenser for brugeren.",
+      "Struktur + fleksibilitet (J/P): den ene holder deadlines, den anden finder nye veje, når planen knækker.",
+      "Undgå at sætte “modsatte” profiler sammen uden aftale – forskelle bliver først en styrke, når I taler om dem.",
+    ],
+    try: "Lad hver gruppe vælge ét komplementært par og aftale, hvordan de bruger forskellen i næste opgave.",
+    figure: "ESTP",
+    band: "band-explorers",
+  },
+];
+
+export const aboutGuide = [
+  {
+    name: "Beregning",
+    title: "Sådan bliver svar til en profil",
+    lead: "Du svarer i dit eget tempo: mindst 30 originale udsagn for en profil, og op til 150 hvis du vil skærpe resultatet. Du kan stoppe undervejs, se din profil, og senere svare flere for en opdateret vurdering. Hvert svar går fra −3 (meget uenig) til +3 (meget enig). Halvdelen af udsagnene vender mod hver sin pol.",
+    points: [
+      "For hver dimension lægger vi de retningskorrigerede svar sammen og skalerer dem til 0–100 ud fra antallet af besvarede udsagn i den dimension.",
+      "Over 50 giver det første bogstav, under 50 det andet. Præcis 50 vises som X.",
+      "De første fire dimensioner danner typeprofilen. Reaktion på pres vises separat og indgår ikke i bogstaverne.",
+      "Færre udsagn giver mere usikkerhed tæt på midten. Flere svar skærper typisk signalet.",
+    ],
+    try: "Når du læser dit resultat: kig først på de dimensioner, der ligger tæt på midten. Der er ofte mest at snakke om.",
+    figure: "INTJ",
+    band: "band-analysts",
+  },
+  {
+    name: "Begrænsninger",
+    title: "Hvad testen kan – og ikke kan",
+    lead: "Spørgsmålene og beskrivelserne er skrevet til dette undervisningsværktøj. Testen er ikke psykometrisk valideret, og procenterne er placeringer på svarskalaen – ikke sandsynligheder eller mål for evner.",
+    points: [
+      "Resultatet beskriver selvrapporterede præferencer på et bestemt tidspunkt. Det kan ændre sig med erfaring og kontekst.",
+      "Brug det til refleksion og samtale – ikke som facitliste for, hvem du er.",
+      "Det må ikke stå alene som grundlag for karakterer, adgang til uddannelse eller vurdering af evner.",
+      "En type bestemmer heller ikke, hvilken rolle du kan lære at udfylde i et softwareteam.",
+    ],
+    try: "Spørg dig selv efter testen: Hvad genkender jeg? Hvad afhænger af situationen? Hvad vil jeg øve?",
+    figure: "INFP",
+    band: "band-diplomats",
+  },
+  {
+    name: "Gruppedannelse",
+    title: "Hvordan forslagene laves",
+    lead: "Gruppebyggeren blander rækkefølgen, fordeler omtrent lige mange elever i hver gruppe og bruger forskelle mellem de første fire dimensionsscorer til at vælge blandt lige fyldte grupper.",
+    points: [
+      "Den femte dimension (reaktion på pres) indgår ikke i fordelingen.",
+      "Et nyt forslag bruger en ny blanding, så I kan sammenligne flere udgangspunkter.",
+      "Det er en enkel tommelfingerregel, som hverken garanterer god kemi eller den bedste fordeling.",
+      "Supplér altid med elevernes ønsker, faglige erfaring og kendskab til hinanden.",
+    ],
+    try: "Åbn gruppeguiden under Gruppebygger, før I låser holdene – der står mere om ens vs. blandede grupper.",
+    figure: "ISTJ",
+    band: "band-sentinels",
+  },
+  {
+    name: "Privatliv",
+    title: "Din konto og dine data",
+    lead: "Når du er logget ind med Mercantec Auth, gemmes aktuelt resultat og samling på din konto (Postgres). Udkast undervejs caches i browseren, så du kan fortsætte testen. Resultater deles ikke automatisk med et hold.",
+    points: [
+      "Log ind for varig gemning på tværs af computere. Uden login er resultatet midlertidigt i browserens cache.",
+      "Du kan downloade en JSON-fil med navn/alias, svar, scorer, tidspunkt og id til backup eller deling med underviseren.",
+      "Du kan fjerne resultater i gruppebyggeren — er du logget ind, slettes de også fra din konto.",
+      "JSON-eksport er stadig nyttig som sikkerhedskopi, hvis du skifter browser eller enhed.",
+    ],
+    try: "Log ind før du starter en vigtig testrunde — så lander resultatet direkte på din konto.",
+    figure: "ESTP",
+    band: "band-explorers",
+  },
+  {
+    name: "Værktøjet",
+    title: "Jeres eget undervisningsværktøj",
+    lead: "Testforløbet er inspireret af 16Personalities. Samspil er ikke tilknyttet dem og bruger egne spørgsmål, beskrivelser og beregninger. Resultaterne kan ikke sidestilles med deres test.",
+    points: [
+      "Typenavne og figurillustrationer er fra designreferencen – se THIRD-PARTY-NOTICES for oprindelse.",
+      "Spørgsmål, typebeskrivelser og softwareeksempler ligger samlet i projektets datafil, så I kan videreudvikle dem.",
+      "Resultatfiler mærkes med en spørgsmålsversion, så forskellige tests ikke blandes ved import.",
+      "Målet er et fælles sprog for forskelle i læring og softwareprojekter – ikke en diagnostisk vurdering.",
+    ],
+    try: "Kig i typegalleriet sammen med holdet, og find to profiler der er forskellige fra jeres egne.",
+    figure: "ENFJ",
+    band: "band-diplomats",
+    link: {
+      href: "https://www.16personalities.com/da/gratis-personlighedstest",
+      label: "16Personalities",
+    },
+  },
+];

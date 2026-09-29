@@ -1,0 +1,66 @@
+[
+  {
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/intj-architect-male.svg?v=3",
+    "code": "INTJ"
+  },
+  {
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/intp-logician-female.svg?v=3",
+    "code": "INTP"
+  },
+  {
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/entj-commander-female.svg?v=3",
+    "code": "ENTJ"
+  },
+  {
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/entp-debater-male.svg?v=3",
+    "code": "ENTP"
+  },
+  {
+    "code": "INFJ",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/infj-advocate-male.svg?v=3"
+  },
+  {
+    "code": "INFP",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/infp-mediator-female.svg?v=3"
+  },
+  {
+    "code": "ENFJ",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/enfj-protagonist-male.svg?v=3"
+  },
+  {
+    "code": "ENFP",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/enfp-campaigner-female.svg?v=3"
+  },
+  {
+    "code": "ISTJ",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/istj-logistician-male.svg?v=3"
+  },
+  {
+    "code": "ISFJ",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/isfj-defender-female.svg?v=3"
+  },
+  {
+    "code": "ESTJ",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/estj-executive-female.svg?v=3"
+  },
+  {
+    "code": "ESFJ",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/esfj-consul-male.svg?v=3"
+  },
+  {
+    "code": "ISTP",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/istp-virtuoso-male.svg?v=3"
+  },
+  {
+    "code": "ISFP",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/isfp-adventurer-female.svg?v=3"
+  },
+  {
+    "code": "ESTP",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/estp-entrepreneur-male.svg?v=3"
+  },
+  {
+    "code": "ESFP",
+    "url": "https://www.16personalities.com/static/images/personality-types/avatars/esfp-entertainer-female.svg?v=3"
+  }
+]
